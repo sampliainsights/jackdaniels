@@ -1,0 +1,2707 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jack Daniel's — Resultados de encuesta — Samplia</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --surface: #fffefb;
+      --surface-lowest: #f5f4f1;
+      --surface-low: #f5f4f1;
+      --surface-mid: #cccbc8;
+      --surface-high: #cccbc8;
+      --surface-highest: #cccbc8;
+      --primary: #00668c;
+      --primary-container: #71c4ef;
+      --primary-dim: #004d6a;
+      --on-primary: #ffffff;
+      --on-surface: #1d1c1c;
+      --on-surface-variant: #313d44;
+      --on-surface-muted: #313d44;
+      --outline-ghost: rgba(0, 102, 140, .12);
+      --success: #1a7a47;
+      --success-dark: #0d5c35;
+      --warning: #b45309;
+      --error: #c62828;
+      --radius-xl: 3rem;
+      --radius-lg: 2rem;
+      --radius-md: 1.5rem;
+      --radius-sm: 0.75rem;
+      --radius-full: 9999px;
+      --shadow-a: 0 8px 40px rgba(29, 28, 28, .05), 0 2px 12px rgba(29, 28, 28, .04);
+      --shadow-f: 0 16px 60px rgba(29, 28, 28, .09), 0 4px 20px rgba(29, 28, 28, .06);
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth
+    }
+
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-dim), var(--primary), #f59e0b);
+      z-index: 2000;
+      box-shadow: 0 0 12px rgba(179, 26, 56, .5)
+    }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--surface);
+      color: var(--on-surface);
+      min-height: 100vh;
+      padding-bottom: 3rem
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--surface-lowest);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 20px rgba(0, 29, 52, .05)
+    }
+
+    .samplia-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none
+    }
+
+    .samplia-logo-mark {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary-dim), var(--primary));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .samplia-logo-mark svg {
+      width: 18px;
+      height: 18px
+    }
+
+    .samplia-logo-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--on-surface);
+      letter-spacing: -.3px
+    }
+
+    .samplia-logo-text span {
+      color: var(--primary)
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .live-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(179, 26, 56, .10);
+      color: var(--primary);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: .6px
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+      animation: blink 1.4s infinite
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .2
+      }
+    }
+
+    .last-update {
+      font-size: 11px;
+      color: var(--on-surface-muted)
+    }
+
+    /* ── TITLE BAR ── */
+    .title-bar {
+      background: linear-gradient(135deg, #1d1c1c 0%, #313d44 30%, #00668c 70%, #71c4ef 100%);
+      background-size: 200% 200%;
+      animation: gradientMove 10s ease-in-out infinite alternate;
+      padding: 2.25rem 2rem 2.75rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%
+      }
+
+      100% {
+        background-position: 100% 50%
+      }
+    }
+
+    .title-bar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% -10%, rgba(255, 200, 100, .12) 0%, transparent 55%);
+      pointer-events: none
+    }
+
+    .title-bar::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 200, 100, .3), transparent)
+    }
+
+    .title-left {
+      flex: 1;
+      min-width: 260px;
+      position: relative
+    }
+
+    .brand-eyebrow {
+      font-family: 'Manrope', sans-serif;
+      color: rgba(255, 200, 100, .85);
+      font-size: .68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .brand-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: rgba(255, 200, 100, .6)
+    }
+
+    .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--on-primary);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -.5px;
+      line-height: 1.05
+    }
+
+    .title-sub {
+      font-family: 'Manrope', sans-serif;
+      color: rgba(255, 255, 255, .78);
+      font-size: clamp(.8rem, 1.8vw, .95rem);
+      font-weight: 500;
+      margin-top: .45rem
+    }
+
+    .location-box {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      background: rgba(255, 255, 255, .08);
+      backdrop-filter: blur(24px);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      border: 1px solid rgba(255, 200, 100, .18)
+    }
+
+    .location-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-size: clamp(10px, 1.4vw, 12px);
+      color: rgba(255, 255, 255, .88);
+      line-height: 1.4
+    }
+
+    .location-line svg {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: rgba(255, 200, 100, .8)
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      padding: 2rem;
+      max-width: 1160px;
+      margin: 0 auto
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      background: var(--surface-lowest);
+      border-radius: var(--radius-full);
+      padding: .6rem .6rem .6rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 72px;
+      z-index: 40;
+      box-shadow: 0 4px 20px rgba(0, 29, 52, .06), 0 1px 6px rgba(0, 29, 52, .04);
+      transition: box-shadow .3s ease, background .3s ease;
+      border: 1px solid rgba(179, 26, 56, .08);
+      margin-bottom: 2rem
+    }
+
+    .filter-bar.is-sticky {
+      background: rgba(245, 242, 242, .94);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      box-shadow: 0 8px 32px rgba(0, 29, 52, .12)
+    }
+
+    .filter-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--on-surface-muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      white-space: nowrap
+    }
+
+    .filter-select {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--on-surface);
+      background: var(--surface-high);
+      border: none;
+      outline: none;
+      border-radius: var(--radius-full);
+      padding: 8px 32px 8px 14px;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233d5166' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 11px center;
+      cursor: pointer;
+      transition: background .2s
+    }
+
+    .filter-select:focus {
+      background-color: var(--surface-highest)
+    }
+
+    .filter-sep {
+      width: 1px;
+      height: 20px;
+      background: rgba(0, 29, 52, .08)
+    }
+
+    .filter-reset-btn {
+      margin-left: auto;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(179, 26, 56, .08);
+      border: none;
+      cursor: pointer;
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      transition: background .2s
+    }
+
+    .filter-reset-btn:hover {
+      background: rgba(179, 26, 56, .16)
+    }
+
+    /* ── KPI ROW ── */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 2rem
+    }
+
+    .kpi {
+      background: var(--surface-low);
+      border-radius: 2.2rem;
+      padding: 1.6rem 1.5rem;
+      box-shadow: var(--shadow-a);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 145px;
+      border: 1px solid rgba(179, 26, 56, .04);
+      transition: transform .3s ease, box-shadow .3s ease
+    }
+
+    .kpi:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-f);
+      border-color: rgba(179, 26, 56, .12)
+    }
+
+    .kpi-icon-wrap {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 36px;
+      height: 36px;
+      background: var(--surface-mid);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary)
+    }
+
+    .kpi-accent {
+      position: absolute;
+      top: 0;
+      left: 1.5rem;
+      right: 1.5rem;
+      height: 3px;
+      border-radius: 0 0 4px 4px;
+      background: linear-gradient(90deg, var(--primary-dim), var(--primary))
+    }
+
+    .kpi-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--on-surface-muted);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 6px
+    }
+
+    .kpi-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.6rem, 3.2vw, 2.15rem);
+      font-weight: 900;
+      color: var(--on-surface);
+      line-height: 1.1;
+      letter-spacing: -1.2px
+    }
+
+    .kpi-sub {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      margin-top: 4px;
+      line-height: 1.4
+    }
+
+    .bench-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--surface-highest);
+      border-radius: var(--radius-full);
+      padding: 3px 10px
+    }
+
+    .bench-label {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: var(--on-surface-muted);
+      text-transform: uppercase;
+      letter-spacing: .4px
+    }
+
+    .bench-val {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 800
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .68rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      margin: 2.5rem 0 1.1rem
+    }
+
+    /* ── GRIDS ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 14px
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 14px
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--surface-low);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem 1.6rem;
+      box-shadow: var(--shadow-a)
+    }
+
+    .card-title {
+      font-size: .68rem;
+      font-weight: 700;
+      color: var(--on-surface-muted);
+      text-transform: uppercase;
+      letter-spacing: .55px;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .card-title::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 14px;
+      background: linear-gradient(180deg, var(--primary-dim), var(--primary));
+      border-radius: 2px;
+      flex-shrink: 0
+    }
+
+    .mb14 {
+      margin-bottom: 14px
+    }
+
+    /* ── CHARTS ── */
+    .chart-wrap {
+      position: relative;
+      width: 100%
+    }
+
+    .chart-note {
+      margin-top: .7rem;
+      font-size: .66rem;
+      color: var(--on-surface-muted);
+      line-height: 1.4;
+      text-align: center
+    }
+
+    .h160 {
+      height: clamp(120px, 20vw, 162px)
+    }
+
+    .h200 {
+      height: clamp(150px, 25vw, 202px)
+    }
+
+    .h240 {
+      height: clamp(170px, 28vw, 242px)
+    }
+
+    .h280 {
+      height: clamp(190px, 32vw, 282px)
+    }
+
+    .h300 {
+      height: clamp(200px, 36vw, 302px)
+    }
+
+    .h350 {
+      height: clamp(220px, 40vw, 352px)
+    }
+
+    .h400 {
+      height: clamp(240px, 44vw, 402px)
+    }
+
+    /* ── MINI STATS ── */
+    .mini-stat {
+      background: var(--surface-mid);
+      border-radius: calc(var(--radius-lg) + 1px);
+      padding: .85rem;
+      text-align: center
+    }
+
+    .mini-stat-label {
+      font-size: .59rem;
+      font-weight: 700;
+      color: var(--on-surface-muted);
+      text-transform: uppercase;
+      letter-spacing: .45px;
+      margin-bottom: 4px
+    }
+
+    .mini-stat-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1rem, 2.4vw, 1.25rem);
+      font-weight: 800;
+      color: var(--on-surface);
+      line-height: 1;
+      letter-spacing: -.5px
+    }
+
+    .mini-stat-value.red {
+      color: var(--error)
+    }
+
+    .mini-stat-value.green {
+      color: var(--success)
+    }
+
+    .mini-stat-value.orange {
+      color: var(--warning)
+    }
+
+    .mini-stat-value.primary {
+      color: var(--primary)
+    }
+
+    .mini-stat-value.dark-green {
+      color: var(--success-dark)
+    }
+
+    /* ── RECOMMEND / NPS EXECUTIVE BLOCK ── */
+    .recommend-card {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nps-gauge-box {
+      background: var(--surface-low);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--surface-mid);
+    }
+
+    .nps-main-score {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin: 10px 0;
+    }
+
+    .nps-main-score.positive {
+      color: var(--success);
+    }
+
+    .nps-main-score.neutral {
+      color: var(--primary);
+    }
+
+    .nps-main-score.negative {
+      color: var(--error);
+    }
+
+    .nps-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--on-surface-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .nps-category {
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-top: 5px;
+    }
+
+    .nps-dist-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .nps-bar-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nps-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--on-surface-muted);
+      text-transform: uppercase;
+    }
+
+    .nps-tricolor-bar {
+      height: 14px;
+      width: 100%;
+      background: var(--surface-high);
+      border-radius: 10px;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .nps-seg {
+      height: 100%;
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nps-seg.det {
+      background: #e74c3c;
+    }
+
+    /* Red */
+    .nps-seg.pas {
+      background: #f1c40f;
+    }
+
+    /* Yellow/Gold */
+    .nps-seg.pro {
+      background: #2ecc71;
+    }
+
+    /* Green */
+
+    .nps-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .nps-stat-item {
+      padding: 12px;
+      border-radius: 1rem;
+      background: var(--surface-mid);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .nps-stat-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    .nps-stat-label {
+      font-size: 0.6rem;
+      font-weight: 800;
+      color: var(--on-surface-muted);
+      text-transform: uppercase;
+    }
+
+    .nps-avg-box {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: linear-gradient(90deg, rgba(231, 76, 60, 0.05), rgba(46, 204, 113, 0.05));
+      border: 1px dashed var(--surface-mid);
+      border-radius: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nps-avg-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--on-surface-variant);
+    }
+
+    .nps-avg-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    @media (max-width: 900px) {
+      .recommend-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── INSIGHTS ── */
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 2rem
+    }
+
+    .insight-card {
+      background: #ffffff;
+      border-radius: 2rem;
+      padding: 1.7rem;
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+      box-shadow: var(--shadow-a);
+      border: 1px solid rgba(179, 26, 56, .05);
+      transition: all .3s cubic-bezier(.4, 0, .2, 1);
+      position: relative;
+      overflow: hidden
+    }
+
+    .insight-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-f);
+      border-color: rgba(179, 26, 56, .15)
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-dim), var(--primary), #f59e0b)
+    }
+
+    .insight-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #fff0f3 0%, #ffe0e6 100%);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      margin-bottom: .4rem
+    }
+
+    .insight-title {
+      font-size: .88rem;
+      font-weight: 800;
+      color: var(--on-surface);
+      letter-spacing: -.2px;
+      margin-bottom: 2px
+    }
+
+    .insight-body {
+      font-size: .78rem;
+      line-height: 1.6;
+      color: var(--on-surface-muted);
+      font-weight: 500
+    }
+
+    .insight-body strong {
+      color: var(--primary);
+      font-weight: 800
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--surface-high)
+    }
+
+    .footer-info {
+      font-size: .7rem;
+      color: var(--on-surface-muted);
+      font-weight: 500
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--primary-dim), var(--primary));
+      color: var(--on-primary);
+      font-family: 'Manrope', sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(179, 26, 56, .35)
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 28px rgba(179, 26, 56, .5)
+    }
+
+    .btn-evalua {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-lowest);
+      color: var(--primary);
+      font-family: 'Manrope', sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--primary);
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: transform .2s, background .2s, box-shadow .2s
+    }
+
+    .btn-evalua:hover {
+      background: var(--primary);
+      color: var(--on-primary);
+      transform: scale(1.03);
+      box-shadow: 0 6px 28px rgba(0, 102, 140, .3)
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1) }
+      14%       { transform: scale(1.3) }
+      28%       { transform: scale(1) }
+      42%       { transform: scale(1.2) }
+      56%       { transform: scale(1) }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* ── PHOTO GALLERY ── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px
+    }
+
+    .photo-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      box-shadow: var(--shadow-a);
+      transition: transform .3s ease, box-shadow .3s ease;
+      background: var(--surface-mid)
+    }
+
+    .photo-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-f)
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .photo-card:hover img {
+      transform: scale(1.1)
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(145deg, var(--surface-mid), var(--surface-high));
+      color: var(--on-surface-muted)
+    }
+
+    .photo-placeholder-name {
+      font-size: .6rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 0 .5rem;
+      line-height: 1.3
+    }
+
+    .zoom-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 10, 20, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .3s ease
+    }
+
+    .photo-card:hover .zoom-overlay {
+      background: rgba(0, 10, 20, .4)
+    }
+
+    .zoom-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .15);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      opacity: 0;
+      transform: scale(.8);
+      transition: opacity .3s ease, transform .3s ease
+    }
+
+    .photo-card:hover .zoom-btn {
+      opacity: 1;
+      transform: scale(1)
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, .88);
+      backdrop-filter: blur(12px);
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .3s
+    }
+
+    .lightbox.active {
+      opacity: 1
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 92vw;
+      max-height: 90vh
+    }
+
+    .lightbox-content img {
+      max-width: 92vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 1rem;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, .6)
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -44px;
+      right: 0;
+      background: rgba(255, 255, 255, .1);
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: var(--radius-full);
+      padding: 8px 16px;
+      font-family: 'Manrope', sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background .2s
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, .2)
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .kpi-row {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr
+      }
+
+      .insights-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media (max-width: 640px) {
+      .content {
+        padding: 1rem
+      }
+
+      .kpi-row {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .recommend-top {
+        grid-template-columns: 1fr
+      }
+
+      .title-bar {
+        padding: 1.5rem 1rem 2rem
+      }
+
+      .filter-bar {
+        border-radius: var(--radius-lg);
+        top: 64px
+      }
+    }
+
+    /* ── PERFORMANCE DIARIO TABLE ── */
+    .perf-table-wrap {
+      overflow-x: auto;
+      border-radius: 1.25rem;
+      border: 1px solid var(--surface-high)
+    }
+
+    .perf-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Manrope', sans-serif;
+      min-width: 560px
+    }
+
+    .perf-table thead tr.perf-header-groups th {
+      padding: .6rem 1rem;
+      font-size: .62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      border-bottom: 2px solid rgba(255,255,255,.18)
+    }
+
+    .perf-th-date {
+      background: var(--surface-mid);
+      color: var(--on-surface-muted);
+      text-align: left !important;
+      padding-left: 1.1rem !important;
+      border-radius: 1.25rem 0 0 0
+    }
+
+    .perf-group-sampling {
+      background: #00668c;
+      color: #fff
+    }
+
+    .perf-group-deg {
+      background: #a35010;
+      color: #fff
+    }
+
+    .perf-group-venta {
+      background: #1a7a47;
+      color: #fff;
+      border-radius: 0 1.25rem 0 0
+    }
+
+    .perf-table thead tr.perf-header-sub th {
+      padding: .45rem .7rem;
+      font-size: .6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      text-align: center
+    }
+
+    .perf-sub.sampling {
+      background: rgba(0,102,140,.12);
+      color: #004d6a
+    }
+
+    .perf-sub.deg {
+      background: rgba(163,80,16,.10);
+      color: #7c3800
+    }
+
+    .perf-sub.venta {
+      background: rgba(26,122,71,.10);
+      color: #0d5c35
+    }
+
+    .perf-table tbody tr {
+      transition: background .15s ease
+    }
+
+    .perf-table tbody tr:hover td {
+      background: rgba(0,102,140,.04)
+    }
+
+    .perf-table tbody tr:nth-child(even) td {
+      background: var(--surface-lowest)
+    }
+
+    .perf-table tbody tr:nth-child(odd) td {
+      background: var(--surface)
+    }
+
+    .perf-table tbody tr:hover td {
+      background: rgba(0,102,140,.06) !important
+    }
+
+    .perf-table td {
+      padding: .62rem .9rem;
+      font-size: .78rem;
+      text-align: center;
+      color: var(--on-surface);
+      border-bottom: 1px solid var(--surface-mid)
+    }
+
+    .perf-table td.perf-date-cell {
+      text-align: left;
+      font-weight: 700;
+      color: var(--on-surface-variant);
+      font-size: .72rem;
+      padding-left: 1.1rem
+    }
+
+    .perf-table td.cell-sampling {
+      font-weight: 700;
+      color: #004d6a
+    }
+
+    .perf-table td.cell-deg {
+      font-weight: 600;
+      color: #7c3800
+    }
+
+    .perf-table td.cell-venta {
+      font-weight: 600;
+      color: #0d5c35
+    }
+
+    .perf-table td.cell-zero {
+      color: var(--surface-highest);
+      font-weight: 500
+    }
+
+    .perf-table tr.perf-total td {
+      background: var(--surface-mid) !important;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 900;
+      font-size: .82rem;
+      color: var(--on-surface);
+      border-top: 2px solid var(--surface-high);
+      border-bottom: none
+    }
+
+    .perf-table tr.perf-total td.cell-sampling {
+      color: #00668c;
+      font-size: .9rem
+    }
+
+    .perf-table tr.perf-total td.cell-deg {
+      color: #a35010;
+      font-size: .88rem
+    }
+
+    .perf-table tr.perf-total td.cell-venta {
+      color: #1a7a47;
+      font-size: .88rem
+    }
+
+    .perf-table tr.perf-total td.perf-date-cell {
+      font-size: .75rem;
+      font-weight: 900;
+      color: var(--on-surface);
+      text-transform: uppercase;
+      letter-spacing: .5px
+    }
+
+    .perf-summary-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 1rem
+    }
+
+    .perf-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: var(--radius-full);
+      padding: 6px 14px;
+      font-size: .65rem;
+      font-weight: 800
+    }
+
+    .perf-pill.blue {
+      background: rgba(0,102,140,.10);
+      color: #004d6a
+    }
+
+    .perf-pill.amber {
+      background: rgba(163,80,16,.10);
+      color: #7c3800
+    }
+
+    .perf-pill.green {
+      background: rgba(26,122,71,.10);
+      color: #0d5c35
+    }
+
+    .perf-pill-val {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .82rem;
+      font-weight: 900
+    }
+
+    /* ── PRODUCT LEADERBOARD ── */
+    .product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding: 0.5rem 0;
+    }
+
+    .product-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .product-name {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--on-surface);
+      letter-spacing: -0.2px;
+    }
+
+    .product-pct {
+      font-size: 0.9rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .product-track {
+      height: 10px;
+      background: var(--surface-highest);
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-dim), var(--primary));
+      border-radius: 5px;
+      transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .product-item:hover .product-fill {
+      filter: brightness(1.1);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="scrollProgress"></div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <a class="samplia-logo" href="#" title="Samplia">
+      <img src="https://samplia.com/assets/img/Samplia.svg" alt="Samplia" height="30" style="display: block">
+    </a>
+    <div class="header-right">
+      <div class="live-pill">
+        <div class="live-dot"></div>Live
+      </div>
+      <div class="last-update" id="lastUpdate" style="cursor:pointer" title="Haz clic para recargar">Cargando…</div>
+    </div>
+  </div>
+
+  <!-- TITLE BAR -->
+  <div class="title-bar">
+    <div class="title-left">
+      <div class="brand-eyebrow">Campaña</div>
+      <div class="brand-title">JACK DANIEL'S</div>
+      <div class="title-sub">Resultados de encuesta a consumidores</div>
+    </div>
+    <div class="location-box">
+      <div class="location-line">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+        <span>Samplia X · Plaza Callao, Madrid</span>
+      </div>
+      <div class="location-line">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+        <span>01/04/2026 — 07/04/2026</span>
+      </div>
+      <div class="location-line">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2" />
+          <path d="M21 14v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <path d="M3 10h18" />
+          <path d="M7 15h.01" />
+          <path d="M11 15h.01" />
+        </svg>
+        <span>Samplings entregados: 3.433</span>
+      </div>
+      <div class="location-line">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 3h12l-1 18H7L6 3Z" />
+          <path d="M6.5 13h11" />
+        </svg>
+        <span>Degustaciones: 130</span>
+      </div>
+      <div class="location-line">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 2h6" />
+          <path d="M9 2v5a5 5 0 0 1-1 3v10a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V10a5 5 0 0 1-1-3V2" />
+        </svg>
+        <span>Ventas: 220 und´s</span>
+      </div>
+      <div class="location-line" style="display: none">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        <span id="headerEncuestados">— encuestados</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar" id="filterBar">
+      <span class="filter-label">Filtrar por</span>
+      <div class="filter-sep"></div>
+      <select class="filter-select" id="fGender">
+        <option value="">Todos los géneros</option>
+        <option value="F">Mujer</option>
+        <option value="M">Hombre</option>
+      </select>
+      <select class="filter-select" id="fAge">
+        <option value="">Todas las edades</option>
+        <option value="18-24">18–24</option>
+        <option value="25-34">25–34</option>
+        <option value="35-44">35–44</option>
+        <option value="45-54">45–54</option>
+        <option value="55-64">55–64</option>
+        <option value="65+">65+</option>
+      </select>
+      <select class="filter-select" id="fSabor">
+        <option value="">Todos los productos</option>
+      </select>
+      <button class="filter-reset-btn" id="resetFilters">↺ Resetear</button>
+    </div>
+
+    <!-- COLUMN DEBUG PANEL (auto-populated after load) -->
+    <!-- <div id="colDebugPanel" style="margin-bottom:1rem"></div> -->
+
+    <!-- KPI ROW -->
+    <div class="kpi-row" id="kpiRow">
+      <!-- Encuestados -->
+      <div class="kpi">
+        <div class="kpi-accent"></div>
+        <div class="kpi-icon-wrap">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+        </div>
+        <div class="kpi-label">Encuestados</div>
+        <div class="kpi-value" id="kpiTotal">—</div>
+        <div class="kpi-sub" id="kpiTotalSub">Total respuestas válidas</div>
+        <div style="margin-top:6px; height:18px"></div>
+      </div>
+      <!-- Conocimiento previo -->
+      <div class="kpi">
+        <div class="kpi-accent"></div>
+        <div class="kpi-icon-wrap">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 8v4" />
+            <path d="M12 16h.01" />
+          </svg>
+        </div>
+        <div class="kpi-label">Conocimiento previo</div>
+        <div class="kpi-value" id="kpiConocia">—</div>
+        <div class="kpi-sub">Conocieron a Jack Daniel's en Samplia</div>
+        <div style="margin-top:6px; height:18px"></div>
+      </div>
+      <!-- Comprarían -->
+      <div class="kpi">
+        <div class="kpi-accent"></div>
+        <div class="kpi-icon-wrap">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+        </div>
+        <div class="kpi-label">Comprarían</div>
+        <div class="kpi-value" id="kpiCompra">—</div>
+        <div class="kpi-sub" id="kpiCompraSub">Intención de compra</div>
+        <div style="margin-top:6px" id="kpiBenchCompra"></div>
+      </div>
+      <!-- Valoración media -->
+      <div class="kpi">
+        <div class="kpi-accent"></div>
+        <div class="kpi-icon-wrap">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+        </div>
+        <div class="kpi-label">Valoración media</div>
+        <div class="kpi-value" id="kpiScore">—</div>
+        <div class="kpi-sub">Impresión general (1–10)</div>
+        <div style="margin-top:6px" id="kpiBenchScore"></div>
+      </div>
+    </div>
+
+    <!-- PERFORMANCE DIARIO -->
+    <div class="section-label">Performance Diario</div>
+    <div class="card mb14">
+      <div class="card-title">Actividad diaria · Sampling / Degustación / Venta</div>
+      <div class="perf-table-wrap">
+        <table class="perf-table">
+          <thead>
+            <tr class="perf-header-groups">
+              <th class="perf-th-date" rowspan="2">Fecha</th>
+              <th class="perf-group-sampling" colspan="1">Sampling</th>
+              <th class="perf-group-deg" colspan="2">Degustación (Botella)</th>
+              <th class="perf-group-venta" colspan="3">Venta</th>
+            </tr>
+            <tr class="perf-header-sub">
+              <th class="perf-sub sampling">Minibotella</th>
+              <th class="perf-sub deg">Apple</th>
+              <th class="perf-sub deg">N7</th>
+              <th class="perf-sub venta">Apple</th>
+              <th class="perf-sub venta">N7</th>
+              <th class="perf-sub venta">Honey</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="perf-date-cell">01/04/2026</td>
+              <td class="cell-sampling">450</td>
+              <td class="cell-deg">162</td>
+              <td class="cell-deg">54</td>
+              <td class="cell-venta">10</td>
+              <td class="cell-venta">4</td>
+              <td class="cell-venta">3</td>
+            </tr>
+            <tr>
+              <td class="perf-date-cell">02/04/2026</td>
+              <td class="cell-sampling">632</td>
+              <td class="cell-deg">216</td>
+              <td class="cell-deg">162</td>
+              <td class="cell-venta">2</td>
+              <td class="cell-venta">4</td>
+              <td class="cell-venta">1</td>
+            </tr>
+            <tr>
+              <td class="perf-date-cell">03/04/2026</td>
+              <td class="cell-sampling">538</td>
+              <td class="cell-deg">540</td>
+              <td class="cell-deg">110</td>
+              <td class="cell-venta">14</td>
+              <td class="cell-venta">4</td>
+              <td class="cell-venta cell-zero">0</td>
+            </tr>
+            <tr>
+              <td class="perf-date-cell">04/04/2026</td>
+              <td class="cell-sampling">525</td>
+              <td class="cell-deg">216</td>
+              <td class="cell-deg">110</td>
+              <td class="cell-venta">11</td>
+              <td class="cell-venta">2</td>
+              <td class="cell-venta cell-zero">0</td>
+            </tr>
+            <tr>
+              <td class="perf-date-cell">05/04/2026</td>
+              <td class="cell-sampling">540</td>
+              <td class="cell-deg cell-zero">0</td>
+              <td class="cell-deg">162</td>
+              <td class="cell-venta">14</td>
+              <td class="cell-venta">4</td>
+              <td class="cell-venta cell-zero">0</td>
+            </tr>
+            <tr>
+              <td class="perf-date-cell">06/04/2026</td>
+              <td class="cell-sampling">332</td>
+              <td class="cell-deg cell-zero">0</td>
+              <td class="cell-deg cell-zero">0</td>
+              <td class="cell-venta">9</td>
+              <td class="cell-venta">4</td>
+              <td class="cell-venta cell-zero">0</td>
+            </tr>
+            <tr>
+              <td class="perf-date-cell">07/04/2026</td>
+              <td class="cell-sampling">415</td>
+              <td class="cell-deg cell-zero">0</td>
+              <td class="cell-deg cell-zero">0</td>
+              <td class="cell-venta">4</td>
+              <td class="cell-venta">7</td>
+              <td class="cell-venta cell-zero">0</td>
+            </tr>
+            <tr class="perf-total">
+              <td class="perf-date-cell">Total</td>
+              <td class="cell-sampling">3.432</td>
+              <td class="cell-deg">1.134</td>
+              <td class="cell-deg">598</td>
+              <td class="cell-venta">64</td>
+              <td class="cell-venta">29</td>
+              <td class="cell-venta">4</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="perf-summary-pills">
+        <div class="perf-pill blue">
+          <span>Total Sampling</span>
+          <span class="perf-pill-val">3.432</span>
+          <span>minibotella</span>
+        </div>
+        <div class="perf-pill amber">
+          <span>Total Degustación</span>
+          <span class="perf-pill-val">1.732</span>
+          <span>und's (Apple 1.134 · N7 598)</span>
+        </div>
+        <div class="perf-pill green">
+          <span>Total Ventas</span>
+          <span class="perf-pill-val">97</span>
+          <span>und's (Apple 64 · N7 29 · Honey 4)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEMOGRAFÍA -->
+    <div class="section-label">Demografía</div>
+    <div class="grid-2 mb14">
+      <div class="card">
+        <div class="card-title">Distribución por Género</div>
+        <div class="chart-wrap h200"><canvas id="chartGenero"></canvas></div>
+        <div class="chart-note" id="generoNote">—</div>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          Rangos de Edad
+          <div id="edadStats" style="margin-left:auto; display:flex; gap:6px; align-items:center"></div>
+        </div>
+        <div class="chart-wrap h200"><canvas id="chartEdad"></canvas></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTO PROBADO (Expert Alternative) -->
+    <div class="section-label">Distribución por Producto</div>
+    <div class="card mb14">
+      <div class="card-title">¿Qué producto de la Familia Jack Daniel's has probado?</div>
+      <div id="productLeaderboard" class="product-list">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+
+    <!-- CONOCIMIENTO Y FRECUENCIA -->
+    <div class="section-label">Conocimiento y Frecuencia</div>
+    <div class="grid-2 mb14">
+      <div class="card">
+        <div class="card-title">¿Conocías el producto antes de Samplia?</div>
+        <div class="chart-wrap h280"><canvas id="chartConocia"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Frecuencia de consumo bebidas espirituosas</div>
+        <div id="frecuenciaLeaderboard" class="product-list">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- MOMENTO Y OCASIÓN -->
+    <div class="section-label">Consumo</div>
+    <div class="grid-2 mb14">
+      <div class="card">
+        <div class="card-title">¿En qué momento del día te tomarías el producto que has probado?</div>
+        <div class="chart-wrap h300"><canvas id="chartMomento"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">¿Para qué ocasión comprarías el producto que has probado?</div>
+        <div class="chart-wrap h300"><canvas id="chartOcasion"></canvas></div>
+      </div>
+    </div>
+
+    <!-- VALORACIÓN GENERAL -->
+    <div class="section-label">Valoración e intención</div>
+    <!-- VALORACIÓN E INTENCIÓN SIDE-BY-SIDE -->
+    <div class="grid-2 mb14">
+      <!-- VALORACIÓN GENERAL -->
+      <div class="card">
+        <div class="card-title">Tras probar el producto, ¿Cuál es tu impresión general?</div>
+        <div class="grid-4" style="margin-bottom:1rem; gap: 6px;">
+          <div class="mini-stat" style="padding: 0.6rem 0.2rem;">
+            <div class="mini-stat-label" style="font-size: 0.52rem;">Negativa (1–4)</div>
+            <div class="mini-stat-value red" style="font-size: 1.1rem;" id="mScoreBaja">—</div>
+          </div>
+          <div class="mini-stat" style="padding: 0.6rem 0.2rem;">
+            <div class="mini-stat-label" style="font-size: 0.52rem;">Neutra (5–6)</div>
+            <div class="mini-stat-value orange" style="font-size: 1.1rem;" id="mScoreNeutra">—</div>
+          </div>
+          <div class="mini-stat" style="padding: 0.6rem 0.2rem;">
+            <div class="mini-stat-label" style="font-size: 0.52rem;">Positiva (7–8)</div>
+            <div class="mini-stat-value green" style="font-size: 1.1rem;" id="mScoreAlta">—</div>
+          </div>
+          <div class="mini-stat" style="padding: 0.6rem 0.2rem;">
+            <div class="mini-stat-label" style="font-size: 0.52rem;">Muy positiva (9–10)</div>
+            <div class="mini-stat-value dark-green" style="font-size: 1.1rem;" id="mScoreMuyAlta">—</div>
+          </div>
+        </div>
+        <div class="chart-wrap h240"><canvas id="chartImpresion"></canvas></div>
+        <div class="chart-note" id="impresionNote"></div>
+      </div>
+
+      <!-- RECOMENDARÍA (NPS EXECUTIVE) -->
+      <div class="card">
+        <div class="card-title">Net Promoter Score (NPS) — Propensión a Recomendar</div>
+        <div class="recommend-card" style="grid-template-columns: 1fr; gap: 1rem;">
+          <div class="nps-gauge-box">
+            <div class="nps-label">Resultados NPS</div>
+            <div class="nps-main-score" id="npsScore">—</div>
+            <div class="nps-category" id="npsCategory">—</div>
+          </div>
+          <div class="nps-dist-wrap">
+            <div class="nps-bar-container">
+              <div class="nps-bar-labels">
+                <span>Detractores (1-6)</span>
+                <span>Pasivos (7-8)</span>
+                <span>Promotores (9-10)</span>
+              </div>
+              <div class="nps-tricolor-bar">
+                <div class="nps-seg det" id="npsBarDet" style="width: 0%"></div>
+                <div class="nps-seg pas" id="npsBarPas" style="width: 0%"></div>
+                <div class="nps-seg pro" id="npsBarPro" style="width: 0%"></div>
+              </div>
+            </div>
+            <div class="nps-stats-grid">
+              <div class="nps-stat-item">
+                <span class="nps-stat-value" id="npsPctDet">0%</span>
+                <span class="nps-stat-label">Detractores</span>
+              </div>
+              <div class="nps-stat-item">
+                <span class="nps-stat-value" id="npsPctPas">0%</span>
+                <span class="nps-stat-label">Pasivos</span>
+              </div>
+              <div class="nps-stat-item">
+                <span class="nps-stat-value" id="npsPctPro">0%</span>
+                <span class="nps-stat-label">Promotores</span>
+              </div>
+            </div>
+            <div class="nps-avg-box">
+              <span class="nps-avg-label">Puntuación Media (Escala 1-10)</span>
+              <span class="nps-avg-value" id="npsAvgVal">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2 mb14">
+      <!-- INTENCIÓN DE COMPRA -->
+      <div class="card">
+        <div class="card-title">¿Qué tan probable es que incluyas este producto en tu próxima compra?</div>
+        <div class="chart-wrap h240"><canvas id="chartCompra"></canvas></div>
+        <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 12px;">
+          <div class="mini-stat" style="padding: 0.5rem 0.8rem; text-align: right;">
+            <div class="mini-stat-label" style="font-size: 0.52rem; letter-spacing: 0.2px;">Compradores Potenciales
+            </div>
+            <div class="mini-stat-value primary" style="font-size: 1.1rem;" id="mCompraPct">—</div>
+          </div>
+          <div id="mCompraBench"></div>
+        </div>
+      </div>
+
+      <!-- LO QUE MÁS VALORAN -->
+      <div class="card">
+        <div class="card-title">¿Qué es lo que más valoras del producto que has probado?</div>
+        <div class="chart-wrap h280"><canvas id="chartValoras"></canvas></div>
+      </div>
+    </div>
+
+    <!-- INSIGHTS -->
+    <div class="section-label">Insights de negocio</div>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+        </div>
+        <div class="insight-title">Intención de compra</div>
+        <div class="insight-body" id="insightCompra">—</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+        </div>
+        <div class="insight-title">Valoración del producto</div>
+        <div class="insight-body" id="insightScore">—</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 8v4l3 3" />
+          </svg>
+        </div>
+        <div class="insight-title">Momento de consumo</div>
+        <div class="insight-body" id="insightMomento">—</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <polyline points="16 11 18 13 22 9" />
+          </svg>
+        </div>
+        <div class="insight-title">Conocimiento de marca &amp; captación</div>
+        <div class="insight-body" id="insightConocia">—</div>
+      </div>
+    </div>
+
+    <!-- MEDIA -->
+    <div class="section-label">Media</div>
+    <div class="card mb14">
+      <div class="card-title">Fotos de la campaña</div>
+      <div class="photo-grid">
+        <!-- Foto 1: WhatsApp Image 2026-04-01 at 18.59.17.jpeg -->
+        <!-- Para añadir la imagen, reemplaza '#' con la URL de Google Drive o CDN: https://lh3.googleusercontent.com/d/FILE_ID -->
+        <div class="photo-card" onclick="openLightbox(this.dataset.src)"
+          data-src="https://lh3.googleusercontent.com/d/1y1frTF6tzTFDHiUJcxtmEA3W3ySyMZ8E">
+          <img src="https://lh3.googleusercontent.com/d/1y1frTF6tzTFDHiUJcxtmEA3W3ySyMZ8E" alt="Imagen Campaña 1">
+          <div class="zoom-overlay">
+            <div class="zoom-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <line x1="11" y1="8" x2="11" y2="14" />
+                <line x1="8" y1="11" x2="14" y2="11" />
+              </svg></div>
+          </div>
+        </div>
+        <!-- Foto 2: WhatsApp Image 2026-04-01 at 17.51.58.jpeg -->
+        <div class="photo-card" onclick="openLightbox(this.dataset.src)"
+          data-src="https://lh3.googleusercontent.com/d/1YnyGkhmCkOgDEVYQx06aK3Y2Im9O7Q8l">
+          <img src="https://lh3.googleusercontent.com/d/1YnyGkhmCkOgDEVYQx06aK3Y2Im9O7Q8l" alt="Imagen Campaña 2">
+          <div class="zoom-overlay">
+            <div class="zoom-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <line x1="11" y1="8" x2="11" y2="14" />
+                <line x1="8" y1="11" x2="14" y2="11" />
+              </svg></div>
+          </div>
+        </div>
+        <!-- Foto 3 -->
+        <div class="photo-card" onclick="openLightbox(this.dataset.src)"
+          data-src="https://lh3.googleusercontent.com/d/1SJ1F9xKZwve7t1-fT0xlm1HS_zyjBRS5">
+          <img src="https://lh3.googleusercontent.com/d/1SJ1F9xKZwve7t1-fT0xlm1HS_zyjBRS5" alt="Imagen Campaña 3">
+          <div class="zoom-overlay">
+            <div class="zoom-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <line x1="11" y1="8" x2="11" y2="14" />
+                <line x1="8" y1="11" x2="14" y2="11" />
+              </svg></div>
+          </div>
+        </div>
+        <!-- Foto 4 -->
+        <div class="photo-card" onclick="openLightbox(this.dataset.src)"
+          data-src="https://lh3.googleusercontent.com/d/1E7-l7GNCCcoOyOhAyJZfFpfDx7mBAu3u">
+          <img src="https://lh3.googleusercontent.com/d/1E7-l7GNCCcoOyOhAyJZfFpfDx7mBAu3u" alt="Imagen Campaña 4">
+          <div class="zoom-overlay">
+            <div class="zoom-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <line x1="11" y1="8" x2="11" y2="14" />
+                <line x1="8" y1="11" x2="14" y2="11" />
+              </svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <span class="footer-info" id="footerInfo">Jack Daniel's · Samplia X Plaza Callao · 01/04/2026 – 07/04/2026</span>
+      <div class="footer-right" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <a href="https://sampliainsights.github.io/samplia-evaluacion/" target="_blank" rel="noopener" class="btn-evalua">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+            style="flex-shrink:0;animation:heartbeat 1.2s ease-in-out infinite">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+          </svg>
+          Evalúa tu experiencia con Samplia
+        </a>
+        <button class="btn-primary" id="downloadPdfBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+            style="flex-shrink:0">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          Descargar PDF
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+        Cerrar
+      </button>
+      <img id="lightboxImg" src="" alt="Vista ampliada">
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    Chart.defaults.font.family = "'Manrope', sans-serif";
+
+    // ── CONFIG ──────────────────────────────────────────────────────────
+    const GSHEET_URL = 'https://docs.google.com/spreadsheets/d/17p2A1teUbtoIj9_XlobCLCbNJ7i8zLU26A7OMvvCKN0/gviz/tq?gid=1073766284';
+    const BENCH_SCORE = 7.7;
+
+    // Benchmarks de intención de compra por producto
+    const BENCH_COMPRA_BY_PRODUCT = [
+      { keys: ['apple', 'manzana'], bench: 62, label: 'Jack Daniel\'s Apple' },
+      { keys: ['old', 'no. 7', 'no.7', 'clasica', 'clásica', 'old no'], bench: 65, label: 'Jack Daniel\'s Old No. 7' },
+      { keys: ['fire', 'canela'], bench: 49, label: 'Jack Daniel\'s Fire' },
+      { keys: ['single'], bench: 46, label: 'Jack Daniel\'s Single Barrel' },
+      { keys: ['gentleman'], bench: 46, label: 'Gentleman Jack' }
+    ];
+
+    let allRows = [], allHeaders = [], charts = {};
+
+    // Chart color palettes
+    const CHERRY = ['#00668c', '#71c4ef', '#b6ccd8', '#d4eaf7', '#3b3c3d', '#313d44'];
+    const AMBER = ['#7c3800', '#a35010', '#c06828', '#d88040', '#e8a060', '#f8c890'];
+    const MIXED = ['#00668c', '#a35010', '#71c4ef', '#7c3800', '#b6ccd8', '#c06828', '#d4eaf7', '#d88040', '#3b3c3d', '#313d44'];
+    const SCORE_COLOR = n => { if (n <= 4) return '#c62828'; if (n <= 6) return '#b45309'; if (n <= 8) return '#1a7a47'; return '#0d5c35'; };
+
+    // ── COLUMN INDEX MAP ────────────────────────────────────────────────
+    let CI = {
+      gender: -1, age: -1,
+      sabor: 6,      // Col G forced
+      conocia: 8,    // Col I forced
+      frecuencia: -1,
+      valoras: -1,
+      momento: -1,
+      ocasion: -1,
+      impresion: -1,
+      recomienda: -1,
+      compra: -1
+    };
+
+    // ── HELPERS ─────────────────────────────────────────────────────────
+    function destroyChart(id) { if (charts[id]) { charts[id].destroy(); delete charts[id]; } }
+    function pct(n, t) { return t > 0 ? Math.round(n / t * 100) : 0; }
+    function norm(v) { return (v || '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\s,.]/g, ' ').toLowerCase().replace(/\s+/g, ' ').trim(); }
+    function sortedEntries(map, max = 12) { return Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, max); }
+    function countSingle(arr) { const m = {}; arr.forEach(v => { const k = v.trim(); if (k) m[k] = (m[k] || 0) + 1; }); return m; }
+
+    function ageGroup(val) {
+      const v = (val || '').toString().trim();
+      const groups = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
+      const direct = groups.find(g => v === g || v.replace(/\s/g, '').startsWith(g.replace(/\s/g, '')));
+      if (direct) return direct;
+      const n = parseInt(v);
+      if (isNaN(n) || n < 18) return null;
+      if (n <= 24) return '18-24'; if (n <= 34) return '25-34'; if (n <= 44) return '35-44';
+      if (n <= 54) return '45-54'; if (n <= 64) return '55-64'; return '65+';
+    }
+
+    function wrapLabel(label, max = 24) {
+      if (typeof label !== 'string' || label.length <= max) return label;
+      const words = label.split(' '); const lines = [];
+      words.forEach(w => { const last = lines[lines.length - 1]; if (!last) lines.push(w); else if ((last + ' ' + w).length <= max) lines[lines.length - 1] = last + ' ' + w; else lines.push(w); });
+      return lines;
+    }
+
+    function isNumericScale(arr) {
+      const nums = arr.map(v => parseFloat(v)).filter(v => !isNaN(v) && v >= 1 && v <= 10);
+      return nums.length > arr.length * 0.75;
+    }
+
+    function getBenchCompra(saborFilter) {
+      if (!saborFilter) return null;
+      const n = norm(saborFilter);
+      for (const p of BENCH_COMPRA_BY_PRODUCT) {
+        if (p.keys.some(k => n.includes(k))) return p;
+      }
+      return null;
+    }
+
+    // ── COLUMN DETECTION ────────────────────────────────────────────────
+    function detectColumns(headers) {
+      // Reset all to -1 before detection (except forced fallbacks applied after)
+      Object.keys(CI).forEach(k => CI[k] = -1);
+      const nh = headers.map(h => norm(h));
+      nh.forEach((t, idx) => {
+        if (CI.gender < 0 && /(sexo|genero|gender|\bmujer\b|\bhombre\b|masculino|femenino)/.test(t)) CI.gender = idx;
+        if (CI.age < 0 && /(\bedad\b|[_\s]age\b|\bage\b)/.test(t) && !/(variedad|jornada|ocasion)/.test(t)) CI.age = idx;
+        if (CI.sabor < 0 && /(familia jack|jack daniel|producto.*probado|probado.*familia|variedad|sabor.*probad|producto.*degust|degust)/.test(t)) CI.sabor = idx;
+        if (CI.conocia < 0 && /(conocias|conocia|conocimiento|ya conocia|lo conocia|habia probado|habia.*probado)/.test(t)) CI.conocia = idx;
+        if (CI.frecuencia < 0 && /(frecuencia|con que frecuencia|bebidas espirituosas|cada cuanto|habito.*consumo)/.test(t)) CI.frecuencia = idx;
+        if (CI.valoras < 0 && /(mas valoras|lo que mas|valoras del producto|que valoras|aspecto.*valora|atributo)/.test(t)) CI.valoras = idx;
+        if (CI.momento < 0 && /(momento.*dia.*tomarias|tomarias.*momento|momento del dia|cuando.*tomaria|horario)/.test(t)) CI.momento = idx;
+        if (CI.ocasion < 0 && /(ocasion.*comprarias|para que ocasion|para que comprar|motivo.*compra|cuando.*comprar)/.test(t)) CI.ocasion = idx;
+        if (CI.impresion < 0 && /(impresion general|impression general|cual es tu impresion|valoracion|puntuacion|nota.*producto|del 1 al|escala)/.test(t)) CI.impresion = idx;
+        if (CI.recomienda < 0 && (idx === 13 || /(recomendarias el producto|recomendarias.*familiar|recomendarias.*amigo|recomendar.*amigo|recomendar.*familiar|recomendaria|lo recomendaria)/.test(t))) CI.recomienda = idx;
+        if (CI.compra < 0 && /(probable.*incluyas|incluyas.*proxima|proxima compra|intencion.*compra|compraria|volveria.*comprar|interes.*comprar)/.test(t)) CI.compra = idx;
+      });
+      // Fallback forced columns if detection failed
+      if (CI.age < 0) CI.age = 3;      // Col D → user_age
+      if (CI.sabor < 0) CI.sabor = 6;
+      if (CI.conocia < 0) CI.conocia = 8;
+      if (CI.recomienda < 0) CI.recomienda = 13; // Forced fallback for Column N as requested
+      console.log('Headers detected:', headers);
+      console.log('Column map (CI):', JSON.stringify(CI));
+      // Render debug panel
+      // renderColumnDebug(headers, CI);
+    }
+
+    function renderColumnDebug(headers, ci) {
+      let panel = document.getElementById('colDebugPanel');
+      if (!panel) return;
+      const NAMES = { gender: 'Género', age: 'Edad', sabor: 'Producto', conocia: 'Conocimiento previo', frecuencia: 'Frecuencia', valoras: 'Lo que valoran', momento: 'Momento del día', ocasion: 'Ocasión de compra', impresion: 'Impresión general', recomienda: 'Recomendaría', compra: 'Intención de compra' };
+      const rows = Object.entries(NAMES).map(([k, label]) => {
+        const idx = ci[k];
+        const found = idx >= 0;
+        const colLetter = found ? String.fromCharCode(65 + idx) : '—';
+        const headerName = found ? (headers[idx] || '(vacío)') : 'No detectado';
+        return `<tr>
+        <td style="padding:3px 10px 3px 0;font-weight:700;white-space:nowrap">${label}</td>
+        <td style="padding:3px 8px;text-align:center;font-weight:800;color:${found ? 'var(--success)' : 'var(--error)'}">${found ? '✓' : '✗'}</td>
+        <td style="padding:3px 8px;font-family:monospace;color:var(--on-surface-muted)">${colLetter}${found ? ` (col ${idx + 1})` : ''}</td>
+        <td style="padding:3px 0;color:${found ? 'var(--on-surface)' : 'var(--error)'};font-size:.72rem">${headerName}</td>
+      </tr>`;
+      }).join('');
+      panel.innerHTML = `
+      <details style="font-size:.72rem;color:var(--on-surface-muted)">
+        <summary style="cursor:pointer;font-weight:700;color:var(--on-surface-variant);list-style:none;display:flex;align-items:center;gap:6px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Diagnóstico de columnas detectadas (${Object.values(ci).filter(v => v >= 0).length}/${Object.keys(ci).length} mapeadas)
+        </summary>
+        <div style="margin-top:8px;padding:10px 12px;background:var(--surface-mid);border-radius:12px;overflow-x:auto">
+          <table style="border-collapse:collapse;font-size:.7rem;width:100%">${rows}</table>
+          <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--surface-high);color:var(--on-surface-muted);font-size:.65rem">
+            Hoja: ${headers.length} columnas detectadas · Filas cargadas: <span id="debugRowCount">—</span>
+          </div>
+        </div>
+      </details>`;
+    }
+
+    // ── CHART BUILDERS ──────────────────────────────────────────────────
+    function makeBar(id, labels, data, colors, horiz = false, showDL = true, hideY = false, hideX = false) {
+      destroyChart(id);
+      const canvas = document.getElementById(id); if (!canvas) return;
+      const total = data.reduce((a, b) => a + b, 0);
+      const isMob = window.innerWidth <= 768; const fs = isMob ? 8 : 9;
+      charts[id] = new Chart(canvas.getContext('2d'), {
+        type: 'bar',
+        data: { labels: labels.map(l => wrapLabel(String(l), horiz ? 28 : 18)), datasets: [{ data, backgroundColor: Array.isArray(colors) ? colors : colors, borderRadius: 6, borderSkipped: false }] },
+        options: {
+          responsive: true, maintainAspectRatio: false, indexAxis: horiz ? 'y' : 'x',
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: c => { const s = c.chart.data.datasets[0].data.reduce((a, b) => a + b, 0); return s > 0 ? ' ' + Math.round(c.raw / s * 100) + '%' : ' 0%'; } } },
+            datalabels: showDL ? { anchor: horiz ? 'end' : 'end', align: horiz ? 'end' : 'top', formatter: v => total > 0 ? Math.round(v / total * 100) + '%' : '', font: { family: 'Manrope', weight: 700, size: fs }, color: '#001d34', clip: false } : { display: false }
+          },
+          layout: { padding: { top: !horiz ? 14 : 0, right: horiz ? 48 : 0, left: horiz ? 4 : 0 } },
+          scales: {
+            x: { display: !hideX, grid: { display: horiz, color: 'rgba(0,29,52,.04)' }, ticks: { display: !hideX, font: { family: 'Manrope', size: fs } }, grace: horiz ? '14%' : 0 },
+            y: { display: !hideY, grid: { color: 'rgba(0,29,52,.04)', display: !horiz }, ticks: { display: !hideY, font: { family: 'Manrope', size: fs } }, grace: !horiz ? '14%' : 0 }
+          }
+        },
+        plugins: [ChartDataLabels]
+      });
+    }
+
+    function makeDoughnut(id, labels, data, colors, hideLegend = false) {
+      destroyChart(id);
+      const ctx = document.getElementById(id); if (!ctx) return;
+      const total = data.reduce((a, b) => a + b, 0);
+      const isMob = window.innerWidth <= 768; const fs = isMob ? 8 : 9;
+      charts[id] = new Chart(ctx.getContext('2d'), {
+        type: 'doughnut',
+        data: { labels: labels.map(l => wrapLabel(String(l), 20)), datasets: [{ data, backgroundColor: colors, borderWidth: 3, borderColor: '#f5f2f2' }] },
+        options: {
+          responsive: true, maintainAspectRatio: false, cutout: '62%',
+          plugins: {
+            legend: { display: !hideLegend, position: 'right', labels: { font: { family: 'Manrope', size: fs }, padding: 12, boxWidth: 12, boxHeight: 12 } },
+            tooltip: { callbacks: { label: c => { return ' ' + c.label + ': ' + Math.round(c.raw / total * 100) + '%'; } } },
+            datalabels: { display: true, formatter: (v, ctx) => { const tot = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0); return tot > 0 ? Math.round(v / tot * 100) + '%' : ''; }, font: { family: 'Manrope', weight: 800, size: fs + 1 }, color: '#ffffff' }
+          }
+        },
+        plugins: [ChartDataLabels]
+      });
+    }
+
+    function makeRatingBar(id, dist, max, colorFn) {
+      destroyChart(id);
+      const ctx = document.getElementById(id); if (!ctx) return;
+      const labels = Array.from({ length: max }, (_, i) => String(i + 1));
+      const vals = labels.map(l => dist[l] || 0);
+      const total = vals.reduce((a, b) => a + b, 0);
+      const isMob = window.innerWidth <= 768; const fs = isMob ? 8 : 9;
+      charts[id] = new Chart(ctx.getContext('2d'), {
+        type: 'bar',
+        data: { labels, datasets: [{ data: vals, backgroundColor: labels.map(l => colorFn(+l)), borderRadius: 6 }] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: c => total > 0 ? ' ' + Math.round(c.raw / total * 100) + '%' : ' 0%' } },
+            datalabels: { display: true, anchor: 'end', align: 'top', formatter: v => total > 0 && v > 0 ? Math.round(v / total * 100) + '%' : '', font: { family: 'Manrope', weight: 700, size: fs }, color: '#001d34', clip: false }
+          },
+          layout: { padding: { top: 14 } },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { family: 'Manrope', size: fs } } },
+            y: { display: false, grace: '14%' }
+          }
+        },
+        plugins: [ChartDataLabels]
+      });
+    }
+
+    // ── RENDER ──────────────────────────────────────────────────────────
+    function render(rows) {
+      const total = rows.length;
+      const saborFilter = document.getElementById('fSabor').value;
+
+      // KPI: Encuestados
+      document.getElementById('kpiTotal').textContent = total.toLocaleString('es-ES');
+      document.getElementById('kpiTotalSub').textContent = `De ${allRows.length.toLocaleString('es-ES')} respuestas totales`;
+      const headerEnc = document.getElementById('headerEncuestados');
+      if (headerEnc) headerEnc.textContent = total.toLocaleString('es-ES') + ' encuestados';
+
+      // KPI: Conocimiento previo (Col I) — "No lo conocía."
+      const conociaArr = CI.conocia >= 0 ? rows.map(r => (r[CI.conocia] || '').toString().trim()).filter(v => v !== '') : [];
+      const noConociaCount = conociaArr.filter(v => norm(v).includes('no lo conocia') || norm(v).includes('no lo conoc') || norm(v).startsWith('no')).length;
+      const pConocia = conociaArr.length > 0 ? pct(noConociaCount, conociaArr.length) : 0;
+      document.getElementById('kpiConocia').textContent = conociaArr.length > 0 ? pConocia + '%' : '—';
+
+      // KPI: Comprarían (respuestas "Sí, lo comprare")
+      const compraArr = CI.compra >= 0 ? rows.map(r => (r[CI.compra] || '').toString().trim()).filter(v => v !== '') : [];
+      const siCompraCount = compraArr.filter(v => { const n = norm(v); return n.includes('si') && (n.includes('comprare') || n.includes('comprara') || n.includes('comprar')); }).length;
+      const pCompra = compraArr.length > 0 ? pct(siCompraCount, compraArr.length) : 0;
+      document.getElementById('kpiCompra').textContent = compraArr.length > 0 ? pCompra + '%' : '—';
+
+      const mCPct = document.getElementById('mCompraPct');
+      if (mCPct) mCPct.textContent = compraArr.length > 0 ? pCompra + '%' : '—';
+
+      const benchProduct = getBenchCompra(saborFilter);
+      if (benchProduct) {
+        const diff = pCompra - benchProduct.bench;
+        document.getElementById('kpiBenchCompra').innerHTML = `<div class="bench-pill"><span class="bench-label">Bench ${benchProduct.bench}%</span><span class="bench-val" style="color:${diff >= 0 ? 'var(--success)' : 'var(--error)'}">${diff >= 0 ? '+' : ''}${diff}pp</span></div>`;
+        document.getElementById('kpiCompraSub').textContent = `Comnpradores Potenciales · ${benchProduct.label}`;
+
+        const mCBench = document.getElementById('mCompraBench');
+        if (mCBench) {
+          mCBench.innerHTML = `<div class="bench-pill"><span class="bench-label">vs Bench</span><span class="bench-val" style="color:${diff >= 0 ? 'var(--success)' : 'var(--error)'}">${diff >= 0 ? '+' : ''}${diff}pp</span></div>`;
+        }
+      } else {
+        document.getElementById('kpiBenchCompra').innerHTML = `<div class="bench-pill"><span class="bench-label">Selecciona referencia para ver bench</span></div>`;
+        document.getElementById('kpiCompraSub').textContent = 'Compradores Potenciales de (todos los productos)';
+        const mCBench = document.getElementById('mCompraBench');
+        if (mCBench) mCBench.innerHTML = '';
+      }
+
+      // KPI: Valoración media
+      const impresionArr = CI.impresion >= 0 ? rows.map(r => (r[CI.impresion] || '').toString().trim()).filter(v => v !== '') : [];
+      const impresionNums = impresionArr.map(v => parseFloat(v)).filter(v => !isNaN(v) && v >= 1 && v <= 10);
+      const scoreAvg = impresionNums.length > 0 ? impresionNums.reduce((a, b) => a + b, 0) / impresionNums.length : 0;
+      if (impresionNums.length > 0) {
+        document.getElementById('kpiScore').textContent = scoreAvg.toFixed(1) + '/10';
+        const diffScore = parseFloat((scoreAvg - BENCH_SCORE).toFixed(1));
+        document.getElementById('kpiBenchScore').innerHTML = `<div class="bench-pill"><span class="bench-label">Bench JD ${BENCH_SCORE}</span><span class="bench-val" style="color:${diffScore >= 0 ? 'var(--success)' : 'var(--error)'}">${diffScore >= 0 ? '+' : ''}${diffScore}</span></div>`;
+      } else {
+        document.getElementById('kpiScore').textContent = '—';
+        document.getElementById('kpiBenchScore').innerHTML = '';
+      }
+
+      // ── CHARTS ──────────────────────────────────────────────────────
+
+      // 1. GÉNERO
+      const generoArr = CI.gender >= 0 ? rows.map(r => (r[CI.gender] || '').toString().trim()).filter(v => v !== '') : [];
+      const generoMap = {};
+      generoArr.forEach(v => {
+        const n = norm(v);
+        let key = null;
+        if (n.startsWith('m') || n === 'hombre' || n === 'masculino') key = 'Masculino';
+        else if (n.startsWith('f') || n === 'mujer' || n === 'femenino') key = 'Femenino';
+        if (key) generoMap[key] = (generoMap[key] || 0) + 1;
+      });
+      if (Object.keys(generoMap).length > 0) {
+        const ge = sortedEntries(generoMap);
+        const genderColors = ge.map(e => e[0] === 'Masculino' ? '#16324C' : '#71c4ef');
+        makeDoughnut('chartGenero', ge.map(e => e[0]), ge.map(e => e[1]), genderColors, true);
+        document.getElementById('generoNote').textContent = ge.map(([k, v]) => `${k}: ${pct(v, generoArr.length)}%`).join(' · ');
+      }
+
+      // 2. EDAD
+      const AGE_GROUPS = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
+      const edadArr = CI.age >= 0 ? rows.map(r => (r[CI.age] || '').toString().trim()).filter(v => v !== '') : [];
+      const edadMap = {}; AGE_GROUPS.forEach(g => edadMap[g] = 0);
+      edadArr.forEach(v => { const g = ageGroup(v); if (g) edadMap[g] = (edadMap[g] || 0) + 1; });
+      const edadLabels = AGE_GROUPS.filter(g => edadMap[g] > 0);
+      const edadData = edadLabels.map(g => edadMap[g]);
+      if (edadLabels.length > 0) makeBar('chartEdad', edadLabels, edadData, CHERRY.slice(0, edadLabels.length), false, true, true, false);
+
+      // Calculo de Media y Moda de edad (si hay valores numéricos)
+      const numericAges = edadArr.map(v => parseInt(v)).filter(v => !isNaN(v) && v > 0);
+      let statsHtml = '';
+      if (numericAges.length > 0) {
+        const mean = numericAges.reduce((a, b) => a + b, 0) / numericAges.length;
+        const counts = {}; numericAges.forEach(a => counts[a] = (counts[a] || 0) + 1);
+        const mode = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+        statsHtml = `<div class="bench-pill"><span class="bench-label">Media</span><span class="bench-val" style="color:var(--primary)">${Math.round(mean)}</span></div>
+                     <div class="bench-pill"><span class="bench-label">Moda</span><span class="bench-val" style="color:var(--primary)">${mode}</span></div>`;
+      }
+      const esEl = document.getElementById('edadStats');
+      if (esEl) esEl.innerHTML = statsHtml;
+
+      // 3. CONOCIA
+      if (conociaArr.length > 0) {
+        const conociaMap = countSingle(conociaArr);
+        const ce = sortedEntries(conociaMap);
+        const conociaColors = ['#00668c', '#71c4ef', '#b6ccd8']; // Sequential blues
+        makeDoughnut('chartConocia', ce.map(e => e[0]), ce.map(e => e[1]), conociaColors);
+      }
+
+      // 4. FRECUENCIA (Expert Leaderboard Alternative)
+      const frecArr = CI.frecuencia >= 0 ? rows.map(r => (r[CI.frecuencia] || '').toString().trim()).filter(v => v !== '') : [];
+      const frecLeaderEl = document.getElementById('frecuenciaLeaderboard');
+      if (frecArr.length > 0 && frecLeaderEl) {
+        const frecMap = countSingle(frecArr);
+        const fe = sortedEntries(frecMap);
+        const totalFrec = frecArr.length;
+
+        frecLeaderEl.innerHTML = fe.map(([name, count]) => {
+          const p = pct(count, totalFrec);
+          return `
+            <div class="product-item">
+              <div class="product-meta">
+                <span class="product-name">${name}</span>
+                <span class="product-pct">${p}%</span>
+              </div>
+              <div class="product-track">
+                <div class="product-fill" style="width: ${p}%"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else if (frecLeaderEl) {
+        frecLeaderEl.innerHTML = '<div style="text-align:center;color:var(--on-surface-muted);font-size:.8rem">No hay datos</div>';
+      }
+
+      // 5. SABOR (Expert Leaderboard Alternative)
+      const saborArr = CI.sabor >= 0 ? rows.map(r => (r[CI.sabor] || '').toString().trim()).filter(v => v !== '') : [];
+      const leaderEl = document.getElementById('productLeaderboard');
+      if (saborArr.length > 0 && leaderEl) {
+        const saborMap = countSingle(saborArr);
+        const se = sortedEntries(saborMap, 8);
+        const totalSabor = saborArr.length;
+
+        leaderEl.innerHTML = se.map(([name, count]) => {
+          const p = pct(count, totalSabor);
+          return `
+            <div class="product-item">
+              <div class="product-meta">
+                <span class="product-name">${name}</span>
+                <span class="product-pct">${p}%</span>
+              </div>
+              <div class="product-track">
+                <div class="product-fill" style="width: ${p}%"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else if (leaderEl) {
+        leaderEl.innerHTML = '<div style="text-align:center;color:var(--on-surface-muted);font-size:.8rem">No hay datos de productos</div>';
+      }
+
+      // 6. LO QUE MÁS VALORAN
+      const valorasArr = CI.valoras >= 0 ? rows.map(r => (r[CI.valoras] || '').toString().trim()).filter(v => v !== '') : [];
+      if (valorasArr.length > 0) {
+        const valorasMap = countSingle(valorasArr);
+        const ve = sortedEntries(valorasMap, 10);
+        makeBar('chartValoras', ve.map(e => e[0]), ve.map(e => e[1]), CHERRY, true, true, false, true);
+      }
+
+      // 7. MOMENTO DEL DÍA
+      const momentoArr = CI.momento >= 0 ? rows.map(r => (r[CI.momento] || '').toString().trim()).filter(v => v !== '') : [];
+      if (momentoArr.length > 0) {
+        const momentoMap = countSingle(momentoArr);
+        const me = sortedEntries(momentoMap, 8);
+        makeBar('chartMomento', me.map(e => e[0]), me.map(e => e[1]), CHERRY, true, true, false, true);
+      }
+
+      // 8. OCASIÓN DE COMPRA
+      const ocasionArr = CI.ocasion >= 0 ? rows.map(r => (r[CI.ocasion] || '').toString().trim()).filter(v => v !== '') : [];
+      if (ocasionArr.length > 0) {
+        const ocasionMap = countSingle(ocasionArr);
+        const oe = sortedEntries(ocasionMap, 8);
+        makeBar('chartOcasion', oe.map(e => e[0]), oe.map(e => e[1]), AMBER, true, true, false, true);
+      }
+
+      // 9. IMPRESIÓN GENERAL
+      if (impresionNums.length > 0) {
+        const dist = {}; impresionNums.forEach(v => { const k = String(Math.round(v)); dist[k] = (dist[k] || 0) + 1; });
+        const nT = impresionNums.length;
+        const baja = impresionNums.filter(v => v <= 4).length;
+        const neutra = impresionNums.filter(v => v >= 5 && v <= 6).length;
+        const alta = impresionNums.filter(v => v >= 7 && v <= 8).length;
+        const muyAlta = impresionNums.filter(v => v >= 9).length;
+        document.getElementById('mScoreBaja').textContent = pct(baja, nT) + '%';
+        document.getElementById('mScoreNeutra').textContent = pct(neutra, nT) + '%';
+        document.getElementById('mScoreAlta').textContent = pct(alta, nT) + '%';
+        document.getElementById('mScoreMuyAlta').textContent = pct(muyAlta, nT) + '%';
+        makeRatingBar('chartImpresion', dist, 10, SCORE_COLOR);
+        document.getElementById('impresionNote').textContent = 'Negativa 1–4 · Neutra 5–6 · Positiva 7–8 · Muy positiva 9–10';
+      } else if (impresionArr.length > 0) {
+        const impMap = countSingle(impresionArr); const ie = sortedEntries(impMap, 8);
+        makeBar('chartImpresion', ie.map(e => e[0]), ie.map(e => e[1]), CHERRY, true, true, true, false);
+        document.getElementById('impresionNote').textContent = '';
+      }
+
+      // 10. RECOMENDARÍA (NPS Analysis - Scale 1-10)
+      const recomiendaArrRaw = CI.recomienda >= 0 ? rows.map(r => r[CI.recomienda]) : [];
+      const recoScores = recomiendaArrRaw.map(v => parseInt(v)).filter(n => !isNaN(n) && n >= 1 && n <= 10);
+
+      if (recoScores.length > 0) {
+        const promoters = recoScores.filter(n => n >= 9).length;
+        const passives = recoScores.filter(n => n >= 7 && n <= 8).length;
+        const detractors = recoScores.filter(n => n <= 6).length;
+        const totalReco = recoScores.length;
+
+        const pPro = (promoters / totalReco) * 100;
+        const pPas = (passives / totalReco) * 100;
+        const pDet = (detractors / totalReco) * 100;
+        const npsScore = Math.round(pPro - pDet);
+        const avgScore = (recoScores.reduce((a, b) => a + b, 0) / totalReco).toFixed(2);
+
+        const scoreEl = document.getElementById('npsScore');
+        scoreEl.textContent = npsScore;
+        scoreEl.className = 'nps-main-score ' + (npsScore >= 50 ? 'positive' : (npsScore >= 0 ? 'neutral' : 'negative'));
+
+        const catEl = document.getElementById('npsCategory');
+        if (npsScore >= 70) { catEl.textContent = 'Excelente'; catEl.style.background = '#2ecc7122'; catEl.style.color = '#2ecc71'; }
+        else if (npsScore >= 30) { catEl.textContent = 'Bueno'; catEl.style.background = '#f1c40f22'; catEl.style.color = '#f1c40f'; }
+        else if (npsScore >= 0) { catEl.textContent = 'Aceptable'; catEl.style.background = '#e67e2222'; catEl.style.color = '#e67e22'; }
+        else { catEl.textContent = 'Crítico'; catEl.style.background = '#e74c3c22'; catEl.style.color = '#e74c3c'; }
+
+        document.getElementById('npsBarPro').style.width = pPro + '%';
+        document.getElementById('npsBarPas').style.width = pPas + '%';
+        document.getElementById('npsBarDet').style.width = pDet + '%';
+
+        document.getElementById('npsPctPro').textContent = Math.round(pPro) + '%';
+        document.getElementById('npsPctPas').textContent = Math.round(pPas) + '%';
+        document.getElementById('npsPctDet').textContent = Math.round(pDet) + '%';
+        document.getElementById('npsAvgVal').textContent = avgScore;
+      }
+
+      // 11. INTENCIÓN DE COMPRA (chart)
+      if (compraArr.length > 0) {
+        const categories = {
+          'Compradores Potenciales': 0,
+          'Indecisos': 0,
+          'No compradores': 0
+        };
+        compraArr.forEach(v => {
+          const n = norm(v);
+          if (n.includes('si') && (n.includes('comprare') || n.includes('comprara') || n.includes('comprar'))) {
+            categories['Compradores Potenciales']++;
+          } else if (n.includes('no') && (n.includes('comprare') || n.includes('comprara') || n.includes('comprar'))) {
+            categories['No compradores']++;
+          } else {
+            categories['Indecisos']++;
+          }
+        });
+        const labels = Object.keys(categories);
+        const data = Object.values(categories);
+        const colors = ['#004d6a', '#cccbc8', '#c62828'];
+        makeBar('chartCompra', labels, data, colors, true, true, false, true);
+      }
+
+      // ── INSIGHTS ────────────────────────────────────────────────────
+
+      // Insight 1: Intención de compra
+      if (compraArr.length > 0) {
+        const benchInfo = getBenchCompra(saborFilter);
+        const benchLine = benchInfo ? ` El benchmark para ${benchInfo.label} es del <strong>${benchInfo.bench}%</strong>${pCompra >= benchInfo.bench ? ', resultado <strong>superior al benchmark</strong>' : ' — resultado por debajo del benchmark'}.` : '';
+        document.getElementById('insightCompra').innerHTML = `<strong>${pCompra}%</strong> de los encuestados declaran intención de incluir este producto en su próxima compra.${benchLine} Esto representa una <strong>oportunidad de conversión directa</strong> desde el punto de muestreo hacia el canal de distribución.`;
+      }
+
+      // Insight 2: Valoración
+      if (impresionNums.length > 0) {
+        const nT = impresionNums.length;
+        const positiva = impresionNums.filter(v => v >= 7).length;
+        const pPositiva = pct(positiva, nT);
+        const diffScore = parseFloat((scoreAvg - BENCH_SCORE).toFixed(1));
+        const vsRef = diffScore >= 0 ? `<strong>por encima del benchmark familiar Jack Daniel's (${BENCH_SCORE})</strong>` : `ligeramente por debajo del benchmark familiar (${BENCH_SCORE})`;
+        document.getElementById('insightScore').innerHTML = `<strong>${pPositiva}%</strong> de los consumidores otorga una valoración positiva (≥7), con una media de <strong>${scoreAvg.toFixed(1)}/10</strong>, ${vsRef}. La aceptación organoléptica es sólida y apunta a una base de consumidores <strong>potencialmente fieles</strong>.`;
+      }
+
+      // Insight 3: Momento de consumo
+      if (momentoArr.length > 0) {
+        const mMap = countSingle(momentoArr); const mTop = sortedEntries(mMap, 2);
+        if (mTop.length > 0) {
+          const top1 = mTop[0][0]; const pTop1 = pct(mTop[0][1], momentoArr.length);
+          const top2 = mTop.length > 1 ? ` seguido de <strong>${mTop[1][0]}</strong> (${pct(mTop[1][1], momentoArr.length)}%)` : '.';
+          document.getElementById('insightMomento').innerHTML = `El principal momento de consumo declarado es <strong>${top1}</strong> (${pTop1}%)${top2} Este dato orienta las estrategias de <strong>comunicación horaria y activaciones en PDV</strong> al momento de máxima receptividad del consumidor.`;
+        }
+      } else {
+        document.getElementById('insightMomento').textContent = 'Datos de momento de consumo no disponibles en el set actual.';
+      }
+
+      // Insight 4: Conocimiento de marca
+      if (conociaArr.length > 0) {
+        const nT = conociaArr.length;
+        document.getElementById('insightConocia').innerHTML = `<strong>${pConocia}%</strong> de los encuestados no conocía el producto antes del muestreo, lo que demuestra el alto <strong>poder de captación de nuevos consumidores</strong> de la activación en Plaza Callao. La campaña ha actuado como primera experiencia de marca para ${noConociaCount} personas, ampliando directamente el universo de consumidores potenciales de Jack Daniel's.`;
+      }
+
+      // Footer
+      document.getElementById('footerInfo').textContent = `Jack Daniel's · Samplia X Plaza Callao · 01/04/2026 – 07/04/2026 · ${total.toLocaleString('es-ES')} encuestados`;
+    }
+
+    // ── FILTER ──────────────────────────────────────────────────────────
+    function getFiltered() {
+      const g = document.getElementById('fGender').value;
+      const a = document.getElementById('fAge').value;
+      const s = document.getElementById('fSabor').value;
+      return allRows.filter(r => {
+        if (g && CI.gender >= 0) { const v = (r[CI.gender] || '').toString().trim().toLowerCase(); const isF = v.startsWith('f') || v === 'mujer' || v === 'femenino'; const isM = v.startsWith('m') || v === 'hombre' || v === 'masculino'; if (g === 'F' && !isF) return false; if (g === 'M' && !isM) return false; }
+        if (a && CI.age >= 0) { const ag = ageGroup((r[CI.age] || '').toString()); if (!ag || ag !== a) return false; }
+        if (s && CI.sabor >= 0) { const sv = (r[CI.sabor] || '').toString().trim(); if (sv !== s) return false; }
+        return true;
+      });
+    }
+
+    function populateSaborFilter() {
+      const saborArr = allRows.map(r => (r[CI.sabor] || '').toString().trim()).filter(v => v !== '');
+      const unique = [...new Set(saborArr)].sort();
+      const sel = document.getElementById('fSabor');
+      sel.innerHTML = '<option value="">Todos los productos</option>';
+      unique.forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o); });
+    }
+
+    // ── GSHEET LOADER ────────────────────────────────────────────────────
+    function stripWrapper(raw) { const text = raw.toString().trim(); const w = text.match(/^[^(]*\((.*)\);?$/s); return w ? w[1] : text.replace(/^[^\{]+/, '').replace(/[^\}]+$/, ''); }
+    function parseHeaders(raw) { const j = JSON.parse(stripWrapper(raw)); return j.table.cols.map(c => c.label || c.id || ''); }
+    function parseRows(raw) { const j = JSON.parse(stripWrapper(raw)); return j.table.rows.map(r => r.c.map(c => c ? (c.v ?? c.f ?? '') : '')); }
+    function buildCorsUrl(base) { const u = new URL(base); u.searchParams.set('tqx', 'out:json'); return u.toString(); }
+    function buildJsonpUrl(base, cb) { const u = new URL(base); u.searchParams.set('tqx', 'responseHandler:' + cb); return u.toString(); }
+
+    async function loadText(url) {
+      const res = await fetch(buildCorsUrl(url), { mode: 'cors', cache: 'no-cache' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const text = await res.text();
+      if (text.trim().startsWith('<!')) throw new Error('HTML_RESPONSE');
+      return text;
+    }
+
+    function loadJsonp(url) {
+      return new Promise((resolve, reject) => {
+        const cb = '__gsh_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+        let timeout;
+        window[cb] = data => { cleanup(); if (!data) reject(new Error('Empty')); else resolve(JSON.stringify(data)); };
+        const s = document.createElement('script'); s.src = buildJsonpUrl(url, cb); s.async = true;
+        s.onerror = () => { cleanup(); reject(new Error('JSONP error — verifica que la hoja esté publicada en web')); };
+        timeout = setTimeout(() => { cleanup(); reject(new Error('JSONP timeout (15s)')); }, 15000);
+        function cleanup() { clearTimeout(timeout); delete window[cb]; if (s.parentNode) s.parentNode.removeChild(s); }
+        document.head.appendChild(s);
+      });
+    }
+
+    function showErrorBanner(msg, detail = '') {
+      let banner = document.getElementById('dataBanner');
+      if (!banner) { banner = document.createElement('div'); banner.id = 'dataBanner'; banner.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:999;background:#001d34;color:#fff;font-family:Manrope,sans-serif;font-size:.8rem;font-weight:600;padding:.9rem 1.4rem;border-radius:2rem;box-shadow:0 8px 40px rgba(0,29,52,.35);display:flex;align-items:center;gap:.75rem;max-width:92vw;'; document.body.appendChild(banner); }
+      banner.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><div style="color:#fff">${msg}</div>${detail ? `<div style="color:#94a3b8;font-size:.72rem;margin-top:2px">${detail}</div>` : ''}</div><button onclick="this.parentElement.remove()" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:1.1rem;line-height:1;padding:0 0 0 .5rem">✕</button>`;
+    }
+
+    async function fetchData() {
+      try {
+        let raw; let usedJsonp = false;
+        try { raw = await loadText(GSHEET_URL); }
+        catch (e) { raw = await loadJsonp(GSHEET_URL); usedJsonp = true; }
+        if (!raw || raw.trim().length < 10) throw new Error('Respuesta vacía');
+        allHeaders = parseHeaders(raw);
+        detectColumns(allHeaders);
+        allRows = parseRows(raw);
+        if (allRows.length === 0) throw new Error('La hoja no contiene datos');
+        const rc = document.getElementById('debugRowCount'); if (rc) rc.textContent = allRows.length;
+        populateSaborFilter();
+        render(getFiltered());
+        const b = document.getElementById('dataBanner'); if (b) b.remove();
+        const now = new Date();
+        document.getElementById('lastUpdate').textContent = `Actualizado: ${now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}${usedJsonp ? ' (JSONP)' : ''}`;
+      } catch (e) {
+        const isFile = location.protocol === 'file:';
+        let msg = 'No se pueden cargar los datos del Google Sheet';
+        let detail = '';
+        if (isFile) { msg = 'Abre el dashboard desde un servidor web'; detail = 'file:// bloquea peticiones externas. Usa Live Server en VS Code o sube el archivo a un hosting.'; }
+        else if (/HTML_RESPONSE|login|JSONP/i.test(e.message)) { msg = 'La hoja de Google no está publicada en la web'; detail = 'Ve a Archivo → Compartir → Publicar en la web → selecciona la hoja → Publicar.'; }
+        else { detail = e.message || 'Abre la consola (F12) para más detalles.'; }
+        showErrorBanner(msg, detail);
+        document.getElementById('lastUpdate').textContent = 'Error · ' + (e.message || 'desconocido');
+      }
+    }
+
+    // ── EVENTS ────────────────────────────────────────────────────────────
+    ['fGender', 'fAge', 'fSabor'].forEach(id => {
+      document.getElementById(id).addEventListener('change', () => render(getFiltered()));
+    });
+    document.getElementById('resetFilters').addEventListener('click', () => {
+      document.getElementById('fGender').value = '';
+      document.getElementById('fAge').value = '';
+      document.getElementById('fSabor').value = '';
+      render(getFiltered());
+    });
+    document.getElementById('lastUpdate').addEventListener('click', fetchData);
+
+    // PDF DOWNLOAD
+    document.getElementById('downloadPdfBtn').addEventListener('click', async function () {
+      const btn = this; const orig = btn.innerHTML;
+      btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Generando…';
+      btn.disabled = true;
+      try {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfW = 210, pdfH = 297, mg = 10, usable = pdfW - mg * 2;
+
+        // --- Capture the title-bar hero as a real image ---
+        const heroEl = document.querySelector('.title-bar');
+        const heroCanvas = await html2canvas(heroEl, { scale: 1.8, useCORS: true, backgroundColor: '#1d1c1c' });
+        const heroImg = heroCanvas.toDataURL('image/jpeg', 0.92);
+        const heroH = parseFloat((heroCanvas.height * (usable / heroCanvas.width)).toFixed(2));
+
+        // y where content starts / ends on every page
+        const contentTop = mg + heroH + 4;
+        const contentBot = pdfH - mg;
+        const maxBlockH  = contentBot - contentTop;
+
+        function stampHero() {
+          pdf.addImage(heroImg, 'JPEG', mg, mg, usable, heroH);
+        }
+
+        // First page
+        stampHero();
+        let y = contentTop;
+
+        // --- Content blocks (skip filter-bar) ---
+        const blocks = Array.from(document.querySelector('.content').children)
+          .filter(el => !el.classList.contains('filter-bar') && el.tagName !== 'SCRIPT');
+
+        for (let i = 0; i < blocks.length; i++) {
+          const block = blocks[i];
+          const c = await html2canvas(block, { scale: 1.6, useCORS: true, backgroundColor: '#f5f4f1', logging: false });
+          const img = c.toDataURL('image/jpeg', 0.88);
+          const dh  = parseFloat((c.height * (usable / c.width)).toFixed(2));
+
+          // Section labels must stay with the card that follows them.
+          // Reserve 55 mm after the label so the next block isn't orphaned on the next page.
+          const keepWithNext = block.classList.contains('section-label') ? 55 : 0;
+
+          // If it won't fit (including the keep-with-next buffer), start a fresh page
+          if (y + dh + keepWithNext > contentBot) {
+            pdf.addPage();
+            stampHero();
+            y = contentTop;
+          }
+
+          // If the block is taller than a full content area, scale it down to fit
+          if (dh > maxBlockH) {
+            const ratio = maxBlockH / dh;
+            const sw = usable * ratio;
+            const sx = mg + (usable - sw) / 2;
+            pdf.addImage(img, 'JPEG', sx, y, sw, maxBlockH);
+            y += maxBlockH + 4;
+          } else {
+            pdf.addImage(img, 'JPEG', mg, y, usable, dh);
+            y += dh + 4;
+          }
+        }
+
+        pdf.save('JackDaniels_Resultados_Encuesta.pdf');
+      } catch (err) {
+        console.error(err);
+        alert('Error al generar el PDF. Prueba desde un servidor web.');
+      } finally {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+      }
+    });
+
+    // SCROLL PROGRESS
+    window.addEventListener('scroll', () => {
+      const ws = document.body.scrollTop || document.documentElement.scrollTop;
+      const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('scrollProgress').style.width = (ws / h * 100) + '%';
+    });
+
+    // STICKY FILTER BAR
+    const fb = document.querySelector('.filter-bar');
+    if (fb) { const obs = new IntersectionObserver(([e]) => { fb.classList.toggle('is-sticky', e.intersectionRatio < 1); }, { threshold: [1], rootMargin: '-73px 0px 0px 0px' }); obs.observe(fb); }
+
+    // RESIZE
+    let rT; window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (allRows.length > 0) render(getFiltered()); }, 250); });
+
+    // LIGHTBOX
+    function openLightbox(src) {
+      if (!src || src === '#') { alert('Imagen no disponible. Añade la URL en el atributo data-src de la tarjeta.'); return; }
+      const lb = document.getElementById('lightbox'); const img = document.getElementById('lightboxImg');
+      img.src = src; lb.style.display = 'flex'; setTimeout(() => lb.classList.add('active'), 10); document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      const lb = document.getElementById('lightbox'); lb.classList.remove('active');
+      setTimeout(() => { lb.style.display = 'none'; document.body.style.overflow = ''; }, 300);
+    }
+    document.getElementById('lightbox').addEventListener('click', function (e) { if (e.target === this) closeLightbox(); });
+    window.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    // INIT
+    document.getElementById('lastUpdate').textContent = 'Cargando datos…';
+    fetchData();
+    setInterval(fetchData, 24 * 60 * 60 * 1000);
+  </script>
+</body>
+
+</html>
